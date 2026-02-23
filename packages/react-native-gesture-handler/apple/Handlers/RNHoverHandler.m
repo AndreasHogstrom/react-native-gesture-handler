@@ -153,11 +153,21 @@ API_AVAILABLE(ios(13.4))
 #endif
 }
 
-- (RNGestureHandlerEventExtraData *)eventExtraData:(UIGestureRecognizer *)recognizer
+- (RNGestureHandlerEventExtraData *)eventExtraData:(UIHoverGestureRecognizer *)recognizer
 {
+  RNGestureHandlerPointerType pointerType = RNGestureHandlerMouse;
+
+#if CHECK_TARGET(16_1)
+  if (@available(iOS 16.1, *)) {
+    if (recognizer.zOffset > 0.0) {
+      pointerType = RNGestureHandlerStylus;
+    }
+  }
+#endif
+
   return [RNGestureHandlerEventExtraData forPosition:[recognizer locationInView:recognizer.view]
                                 withAbsolutePosition:[recognizer locationInView:recognizer.view.window]
-                                     withPointerType:RNGestureHandlerStylus];
+                                     withPointerType:pointerType];
 }
 
 @end

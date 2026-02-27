@@ -207,16 +207,6 @@ static NSHashTable<RNGestureHandler *> *allGestureHandlers;
 #if !TARGET_OS_OSX
 - (void)setCurrentPointerType:(UIEvent *)event
 {
-  if ([self.recognizer isKindOfClass:[UIHoverGestureRecognizer class]]) {
-    _pointerType = RNGestureHandlerMouse;
-    if (@available(iOS 16.1, *)) {
-      if (((UIHoverGestureRecognizer *)self.recognizer).zOffset > 0.0) {
-        _pointerType = RNGestureHandlerStylus;
-      }
-    }
-    return;
-  }
-
   if (event == nil) {
     _pointerType = RNGestureHandlerTouch;
     return;

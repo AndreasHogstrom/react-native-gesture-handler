@@ -121,7 +121,7 @@
 #endif
 
 #if !TARGET_OS_OSX
-- (void)setCurrentPointerType:(nonnull UIEvent *)event;
+- (void)setCurrentPointerType:(nullable UIEvent *)event;
 #else
 - (void)setCurrentPointerTypeToMouse;
 #endif

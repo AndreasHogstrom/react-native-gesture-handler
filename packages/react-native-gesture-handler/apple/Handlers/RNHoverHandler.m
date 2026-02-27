@@ -40,11 +40,20 @@ API_AVAILABLE(ios(13.4))
 
 - (id)initWithGestureHandler:(RNGestureHandler *)gestureHandler
 {
-  if ((self = [super initWithTarget:gestureHandler action:@selector(handleGesture:)])) {
+  if ((self = [super initWithTarget:self action:@selector(handleGesture:)])) {
     _gestureHandler = gestureHandler;
     _hoverEffect = RNGestureHandlerHoverEffectNone;
   }
   return self;
+}
+
+- (void)handleGesture:(UIHoverGestureRecognizer *)recognizer
+{
+  if (recognizer.state == UIGestureRecognizerStateBegan) {
+    [_gestureHandler setCurrentPointerType:nil];
+  }
+
+  [_gestureHandler handleGesture:self];
 }
 
 - (void)triggerAction
@@ -151,15 +160,6 @@ API_AVAILABLE(ios(13.4))
     APPLY_INT_PROP(hoverEffect);
   }
 #endif
-}
-
-- (void)handleGesture:(UIHoverGestureRecognizer *)recognizer
-{
-  if (recognizer.state == UIGestureRecognizerStateBegan) {
-    [self setCurrentPointerType:nil];
-  }
-
-  [super handleGesture:recognizer];
 }
 
 - (void)setCurrentPointerType:(UIEvent *)event

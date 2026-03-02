@@ -193,6 +193,7 @@ API_AVAILABLE(ios(13.4))
 {
   if ((self = [super initWithTag:tag])) {
     _recognizer = [NSGestureRecognizer alloc];
+    _pointerType = RNGestureHandlerMouse;
   }
 
   return self;

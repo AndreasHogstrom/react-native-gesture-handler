@@ -204,14 +204,14 @@ static NSHashTable<RNGestureHandler *> *allGestureHandlers;
   self.recognizer.enabled = enabled;
 }
 
-#if !TARGET_OS_OSX
-- (void)setCurrentPointerType:(UIEvent *)event
+- (void)setCurrentPointerType:(RNGestureHandlerPointerType)pointerType
 {
-  if (event == nil) {
-    _pointerType = RNGestureHandlerTouch;
-    return;
-  }
+  _pointerType = pointerType;
+}
 
+#if !TARGET_OS_OSX
+- (void)setCurrentPointerTypeForEvent:(UIEvent *)event
+{
   UITouch *touch = [[event allTouches] anyObject];
 
   switch (touch.type) {
